@@ -14,8 +14,8 @@ excelAndFileFn()
 function excelAndFileFn() {
 
     let excleUrl = 'public/excel/Autodock Vina 打分排名前40%.xlsx',
-        inputUrl = 'public/input',
-        outputUrl = 'public/output'
+        inputUrl = path.join(__dirname, 'public/input'),
+        outputUrl = path.join(__dirname, 'public/output')
 
     let excel = new excelAndFile(excleUrl, inputUrl, outputUrl);
     excel.init()
