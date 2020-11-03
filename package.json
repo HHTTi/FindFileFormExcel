@@ -1,0 +1,27 @@
+{
+  "name": "findfileformexcel",
+  "version": "1.0.0",
+  "description": "For DYQ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "log4js": "^5.3.0",
+    "node-xlsx": "^0.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HHTTi/FindFileFormExcel.git"
+  },
+  "keywords": [
+    "DYQ"
+  ],
+  "author": "lqm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HHTTi/FindFileFormExcel/issues"
+  },
+  "homepage": "https://github.com/HHTTi/FindFileFormExcel#readme"
+}
