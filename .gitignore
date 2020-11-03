@@ -2,6 +2,7 @@ node_modules/
 yarn.lock
 .vscode/
 logs/
+public
 public/excel
 package-lock.json
 public/input
