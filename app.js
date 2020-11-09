@@ -6,11 +6,49 @@ const log4js = require('./src/middleware/logger')
 const errlog = log4js.getLogger('err')
 const infolog = log4js.getLogger('info')
 
+const config = require('./config')
+
 const excelAndFile = require('./src/excelAndFile')
+const excelAddCid = require('./src/excelAddCid')
+const excelAddCompoundName = require('./src/excelAddCompoundName')
+
 
 var args = process.argv.splice(2)
 
-excelAndFileFn()
+// excelAndFileFn()
+// excelAddCidFn()
+excelAddCompoundNameFn()
+
+function excelAddCompoundNameFn() {
+    const { excelAddCompoundNameData } = config
+
+    Array.isArray(excelAddCompoundNameData) && excelAddCompoundNameData.map(e => {
+        const { excleUrl, inputUrl, outputUrl,name } = e;
+        if (!fs.existsSync(excleUrl)) {
+            errlog.error('文件路径 ', excleUrl, ' 有误！')
+            return;
+        }
+
+        let excel = new excelAddCompoundName(excleUrl, inputUrl, outputUrl,name);
+        excel.init()
+    })
+}
+
+function excelAddCidFn() {
+    const { excelAddCidData } = config
+
+    Array.isArray(excelAddCidData) && excelAddCidData.map(e => {
+        const { excleUrl, inputUrl, outputUrl,name,startId } = e;
+        if (!fs.existsSync(excleUrl)) {
+            errlog.error('文件路径 ', excleUrl, ' 有误！')
+            return;
+        }
+
+        let excel = new excelAddCid(excleUrl, inputUrl, outputUrl,name,startId);
+        excel.init()
+    })
+}
+
 
 function excelAndFileFn() {
 

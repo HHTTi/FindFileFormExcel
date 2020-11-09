@@ -10,16 +10,17 @@ class excelAndFile {
         this.excleUrl = excleUrl;
         this.inputUrl = inputUrl;
         this.outputUrl = outputUrl;
+        this.filePathList = [];
     }
 
     init() {
         try {
             var excel = xlsx.parse(`${this.excleUrl}`)[0].data;
             var successData = [
-                [ 'CId', 'NAME', '', '']
+                [ 'NAME', 'CID' ]
             ]
             var errorData = [
-                [ 'CId', 'NAME', '', '']
+                [  'NAME','CID' ]
             ]
 
 
@@ -27,11 +28,11 @@ class excelAndFile {
 
             Array.isArray(excel) && excel.map((item, index) => {
                 if (index > 0) {
-                    let id = String(item[0]).replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''),
+                    let id = String(item[1]).replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''),
                         input = path.join(this.inputUrl, 'Structure2D_CID_' + id + '.mol2'),
                         output = path.join(this.outputUrl, 'Structure2D_CID_' + id + '.mol2')
 
-                    input = this.filePath(this.inputUrl, 'Structure2D_CID_' + id + '.mol2')
+                    // input = this.filePath(this.inputUrl, 'Structure2D_CID_' + id + '.mol2')
                     // console.log(input, 'input');
 
                     if (fs.existsSync(input)) {
@@ -80,16 +81,31 @@ class excelAndFile {
         return false;
     }
 
+    getFilePathList(pathDir){
+        let p = fs.readdirSync(pathDir);
+
+        p.forEach(ele => {
+            let currentPath = path.join(pathDir,ele)
+            let item = fs.statSync(currentPath)	
+            if(item.isDirectory()){
+                this.getFilePathList(currentPath);
+            }else{
+                this.filePathList.push(currentPath)
+            }	
+        })
+    }
+
+
     writeExcel(newData){
-        let file = path.join(this.outputUrl,'黄酮化合物归类.xlsx') 
+        let file = path.join(this.outputUrl,'黄酮化合物归类第四次.xlsx') 
 
         fs.writeFile(file, xlsx.build(newData), function (err) {
             if (err) {
-                errlog.error("Write " + '黄酮化合物归类' + " failed: " + err);
+                errlog.error("Write " + '黄酮化合物归类第四次' + " failed: " + err);
                 return;
             }
 
-            infolog.info("Write " + '黄酮化合物归类' + " completed.");
+            infolog.info("Write " + '黄酮化合物归类第四次' + " completed.");
         });
 
     }
