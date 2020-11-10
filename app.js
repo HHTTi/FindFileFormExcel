@@ -15,21 +15,32 @@ const excelAddCompoundName = require('./src/excelAddCompoundName')
 
 var args = process.argv.splice(2)
 
-// excelAndFileFn()
-// excelAddCidFn()
-excelAddCompoundNameFn()
+if (args[0]) {
+    switch (args[0]) {
+        case 'excelAndFileFn':
+            excelAndFileFn()
+            break;
+        case 'excelAddCidFn':
+            excelAddCidFn()
+            break;
+        case 'excelAddCompoundNameFn':
+            excelAddCompoundNameFn()
+            break;
+    }
+}
+
 
 function excelAddCompoundNameFn() {
     const { excelAddCompoundNameData } = config
 
     Array.isArray(excelAddCompoundNameData) && excelAddCompoundNameData.map(e => {
-        const { excleUrl, inputUrl, outputUrl,name } = e;
+        const { excleUrl, inputUrl, outputUrl, name } = e;
         if (!fs.existsSync(excleUrl)) {
             errlog.error('文件路径 ', excleUrl, ' 有误！')
             return;
         }
 
-        let excel = new excelAddCompoundName(excleUrl, inputUrl, outputUrl,name);
+        let excel = new excelAddCompoundName(excleUrl, inputUrl, outputUrl, name);
         excel.init()
     })
 }
@@ -38,13 +49,13 @@ function excelAddCidFn() {
     const { excelAddCidData } = config
 
     Array.isArray(excelAddCidData) && excelAddCidData.map(e => {
-        const { excleUrl, inputUrl, outputUrl,name,startId } = e;
+        const { excleUrl, inputUrl, outputUrl, name, startId } = e;
         if (!fs.existsSync(excleUrl)) {
             errlog.error('文件路径 ', excleUrl, ' 有误！')
             return;
         }
 
-        let excel = new excelAddCid(excleUrl, inputUrl, outputUrl,name,startId);
+        let excel = new excelAddCid(excleUrl, inputUrl, outputUrl, name, startId);
         excel.init()
     })
 }
