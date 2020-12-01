@@ -15,7 +15,7 @@ class excelAndFile {
 
     init() {
         try {
-            var excel = xlsx.parse(`${this.excleUrl}`)[0].data;
+            var excel = xlsx.parse(`${this.excleUrl}`)[1].data;
             var successData = [
                 [ 'NAME', 'CID' ]
             ]
@@ -29,18 +29,18 @@ class excelAndFile {
             Array.isArray(excel) && excel.map((item, index) => {
                 if (index > 0) {
                     let id = String(item[1]).replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''),
-                        input = path.join(this.inputUrl, 'Structure2D_CID_' + id + '.mol2'),
-                        output = path.join(this.outputUrl, 'Structure2D_CID_' + id + '.mol2')
+                        input = path.join(this.inputUrl, 'Structure2D_CID_' + id + '.sdf'),
+                        output = path.join(this.outputUrl, 'Structure2D_CID_' + id + '.sdf')
 
-                    // input = this.filePath(this.inputUrl, 'Structure2D_CID_' + id + '.mol2')
+                    // input = this.filePath(this.inputUrl, 'Structure2D_CID_' + id + '.sdf')
                     // console.log(input, 'input');
 
                     if (fs.existsSync(input)) {
-                        fs.copySync(input, output)
-                        infolog.info('copy file to ' + 'Structure2D_CID_' + id + '.mol2' + ' success;')
+                        // fs.copySync(input, output)
+                        // infolog.info('copy file to ' + 'Structure2D_CID_' + id + '.sdf' + ' success;')
                         successData.push(item)
                     } else {
-                        errlog.error('文件不存在：', ' Structure2D_CID_' + id + '.mol2')
+                        errlog.error('文件不存在：', ' Structure2D_CID_' + id + '.sdf')
                         errorData.push(item)
                     }
                 }
@@ -97,11 +97,11 @@ class excelAndFile {
 
 
     writeExcel(newData){
-        let file = path.join(this.outputUrl,'化合物归类11_25.xlsx') 
+        let file = path.join(this.outputUrl,'化合物归类11_26.xlsx') 
 
         fs.writeFile(file, xlsx.build(newData), function (err) {
             if (err) {
-                errlog.error("Write " + '化合物归类11_25' + " failed: " + err);
+                errlog.error("Write " + '化合物归类11_26' + " failed: " + err);
                 return;
             }
 
